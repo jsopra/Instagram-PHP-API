@@ -277,6 +277,8 @@ Real-time photo updates provide your application with instant notifications of n
 - `listRealTimeSubscriptions()`
 - `deleteRealTimeSubscription($object = 'all', $id = null)`
 
+> [Read more about it](http://instagram.com/developer/realtime/)
+
 ## Signed Header
 
 In order to prevent that your access tokens gets stolen, Instagram recommends to sign your requests with a hash of your API secret and IP address.
