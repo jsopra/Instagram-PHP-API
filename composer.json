@@ -1,15 +1,14 @@
 {
-	"name": "cosenary/instagram",
+	"name": "jsopra/instagram",
 	"type": "library",
 	"description": "An easy-to-use PHP Class for accessing Instagram's API.",
 	"keywords": ["instagram", "api"],
-	"homepage": "https://github.com/cosenary/Instagram-PHP-API",
+	"homepage": "https://github.com/jsopra/Instagram-PHP-API",
 	"license": "BSD",
 	"authors": [
 		{
-			"name": "Christian Metz",
-			"email": "christian-metz1@gmx.net",
-			"homepage": "http://metzweb.net"
+			"name": "Juliano Baggio di Sopra",
+			"email": "jsopra@gmail.com"
 		}
 	],
 	"require": {
