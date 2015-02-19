@@ -267,6 +267,16 @@ An example of how to embed Instagram videos by using [Video.js](http://www.video
 
 ---
 
+## Real-time Photo Updates
+
+Real-time photo updates provide your application with instant notifications of new photos as they are posted on Instagram.
+
+**Authenticated methods**
+
+- `createRealTimeSubscription($callbackUrl, $object, $objectParams = [], $aspect = 'media')`
+- `listRealTimeSubscriptions()`
+- `deleteRealTimeSubscription($object = 'all', $id = null)`
+
 ## Signed Header
 
 In order to prevent that your access tokens gets stolen, Instagram recommends to sign your requests with a hash of your API secret and IP address.
