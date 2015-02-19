@@ -371,6 +371,79 @@ class Instagram {
   public function searchLocation($lat, $lng, $distance = 1000) {
     return $this->_makeCall('locations/search', false, array('lat' => $lat, 'lng' => $lng, 'distance' => $distance));
   }
+  
+  /**
+   * In the previous example, we set up a subscription to receive updates whenever one of our client's 
+   * authenticated users posts a photo. Note that this subscription is for all of the client's 
+   * authenticated users, not just a specific user.
+   * 
+   * Other than the required client_id, client_secret, and callback_url parameters, the two parameters you 
+   * need to include in order to subscribe to all photo updates from a user are:
+   * 
+   * @see http://instagram.com/developer/realtime/
+   * 
+   * @param string $object The object you'd like to subscribe to ("user", "tag", "location", "geography")
+   * @param array $objectParams Extra fields to create the object subscription
+   * @param string $aspect The aspect of the object you'd like to subscribe to (in this case, "media"). 
+   * Note that we only support "media" at this time, but we might support other types of subscriptions in the 
+   * future.
+   * 
+   * @return When you POST with the info above to create a new subscription, we simultaneously submit a GET request 
+   * to your callback URL with the following parameters: hub.mode, hub.challenge, hub.verify_token
+   */
+  public function createRealTimeSubscription($callbackUrl, $object, $objectParams = [], $aspect = 'media')
+  {
+    $parameters = [
+      'object' => $object,
+      'callback_url' => $callbackUrl
+    ];
+    
+    switch($object) {
+      
+      case 'user' : 
+        break;
+        
+      case 'tag' :
+      case 'location' :
+        if(!isset($objectParams['object_id'])) {
+          return false;
+        }
+        
+        $parameters['object_id'] = $objectParams['object_id'];
+        
+        break;
+        
+      case 'geography' :
+        
+        if(!isset($objectParams['lat']) || !isset($objectParams['lng']) || !isset($objectParams['radius'])) {
+          return false;
+        }
+        
+        $parameters['lat'] = $objectParams['lat'];
+        $parameters['lng'] = $objectParams['lng'];
+        $parameters['radius'] = $objectParams['radius'];
+        
+        break;
+    }
+    
+    return $this->_makeCall('subscriptions', true, $parameters, 'POST');
+  }
+  
+  public function listRealTimeSubscriptions()
+  {
+    return $this->_makeCall('subscriptions', true, [], 'GET');
+  }
+  
+  public function deleteRealTimeSubscription($object = 'all', $id = null)
+  {
+    $parameters = [];
+    $parameters['object'] = $object;
+    if($id) {
+      $parameters['id'] = $id;
+    }
+    
+    return $this->_makeCall('subscriptions', true, $parameters, 'DELETE');
+  }
 
   /**
    * Pagination feature
