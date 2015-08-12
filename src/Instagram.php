@@ -508,6 +508,63 @@ class Instagram
     }
 
     /**
+     * List all your subscriptions
+     *
+     * @return mixed
+     */
+    public function listSubscriptions()
+    {
+        return $this->_makeCall('subscriptions', false, ['client_secret' => $this->getApiSecret()]);
+    }
+
+    /**
+     * Create a subscription
+     *
+     * @param string $object                           Object type (user, tag, geography, location)
+     * @param string [optional] $object_id             Name of the object you want to subscribe : can be a location, a tag
+     * @param array  [optional] $additionalParams      Distance in meter (max. distance: 5km = 5000)
+     * @param string [optional] $aspect                Aspect of the object, only media is supported for this time.
+     * @return mixed
+     */
+    public function createSubscription($object, $object_id = '', $additionalParams = [], $aspect = 'media')
+    {
+        $params = [
+            'object' => $object,
+            'aspect' => $aspect,
+            'verify_token' => $this->getVerifyToken(),
+            'client_secret' => $this->getApiSecret(),
+            'callback_url' => $this->getApiCallback(),
+        ];
+
+        return $this->_makeCall('subscriptions', false, array_merge($params, $additionalParams), 'POST');
+    }
+
+    /**
+     * Delete a subscription
+     * 
+     * @param string $id  Id of the subscription you want to delete
+     * @return mixed
+     */
+    public function deleteSubscriptionById($id)
+    {
+        $params = ['id'=>$id, 'verify_token'=>$this->getVerifyToken(), 'client_secret' =>$this->getApiSecret()];
+        return $this->_makeCall('subscriptions', false, $params, 'DELETE');  
+    }
+
+    /**
+     * Delete subscriptions
+     * 
+     * @param string $object Object type that you want to delete (Ex.: trag, user, geography, location)
+     * @return mixed
+     */
+    public function deleteSubscriptions($object)
+    {
+        $params = ['object'=>$object, 'verify_token'=>$this->getVerifyToken(), 'client_secret' =>$this->getApiSecret()];
+        return $this->_makeCall('subscriptions', false, $params, 'DELETE'); 
+    }
+
+
+    /**
      * Pagination feature.
      *
      * @param object $obj Instagram object returned by a method
