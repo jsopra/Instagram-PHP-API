@@ -321,7 +321,7 @@ class Instagram
      */
     public function searchMedia($lat, $lng, $distance = 1000, $minTimestamp = null, $maxTimestamp = null)
     {
-        return $this->_makeCall('media/search', false, array(
+        return $this->_makeCall('media/search', true, array(
             'lat' => $lat,
             'lng' => $lng,
             'distance' => $distance,
